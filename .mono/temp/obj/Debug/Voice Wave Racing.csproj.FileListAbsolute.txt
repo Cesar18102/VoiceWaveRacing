@@ -1,0 +1,5 @@
+D:\!!!OLEG\!!!WORK\GitHub\VoiceWaveRacing\.mono\temp\bin\Debug\Voice Wave Racing.dll
+D:\!!!OLEG\!!!WORK\GitHub\VoiceWaveRacing\.mono\temp\bin\Debug\Voice Wave Racing.pdb
+D:\!!!OLEG\!!!WORK\GitHub\VoiceWaveRacing\.mono\temp\obj\Debug\Voice Wave Racing.csprojAssemblyReference.cache
+D:\!!!OLEG\!!!WORK\GitHub\VoiceWaveRacing\.mono\temp\obj\Debug\Voice Wave Racing.dll
+D:\!!!OLEG\!!!WORK\GitHub\VoiceWaveRacing\.mono\temp\obj\Debug\Voice Wave Racing.pdb
