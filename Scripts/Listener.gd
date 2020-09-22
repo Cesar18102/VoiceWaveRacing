@@ -1,28 +1,14 @@
 extends AudioStreamPlayer
 
-var effect : AudioEffectRecord;
+var spectrum : AudioEffectSpectrumAnalyzerInstance;
 
-# Called when the node enters the scene tree for the first time.
+const MIN_FREQ = 100;
+const MAX_FREQ = 5000;
+
 func _ready():
-	effect = AudioServer.get_bus_effect(
+	spectrum = AudioServer.get_bus_effect_instance(
 		AudioServer.get_bus_index("Record"), 0
 	);
-	effect.set_recording_active(true);	
 	
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Record"), 24
-	);
-	
-func get_data():
-	
-	var recording = effect.get_recording();
-	
-	if recording == null:
-		return null;
-	
-	var data = recording.get_data();
-	
-	effect.set_recording_active(false);
-	effect.set_recording_active(true);
-	
-	return data;
+func get_frequency():
+	return spectrum.get_magnitude_for_frequency_range(MIN_FREQ, MAX_FREQ).x;	
