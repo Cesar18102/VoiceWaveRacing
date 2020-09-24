@@ -3,7 +3,7 @@ extends Node2D
 const TIME_SEGMENT = 0.33;
 
 const MAX_FREQ_IGNORED = 0.01;
-const MAX_FREQ_DOWN = 0.4;
+const MAX_FREQ_DOWN = 0.3;
 
 const SPACE_COEF= 0.1;
 
@@ -16,7 +16,7 @@ func _process(delta):
 	if time_passed >= TIME_SEGMENT:
 		var freq = $Listener.get_frequency();
 		
-		print_debug("freq = ", freq);
+		print_debug("data = ", freq);
 		
 		var dx = time_passed * 100;
 		
