@@ -2,10 +2,13 @@ extends Node2D
 
 var road_texture = load("res://Materials/road.jpg");
 var last_point : Vector2 = Vector2(0, 0);
+var points : Array = [ last_point ];
 
 func build(delta_point, space, delta):
 	if space != 0:
 		last_point = Vector2(last_point.x + space, last_point.y);
+		points.append(null);
+		points.append(last_point);
 		
 	var next_point = last_point + delta_point;
 
@@ -52,3 +55,4 @@ func build(delta_point, space, delta):
 	add_child(road);
 
 	last_point = next_point;
+	points.append(next_point);

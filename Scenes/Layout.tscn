@@ -21,6 +21,38 @@ color = Color( 0.666667, 0.129412, 0.129412, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="mouse_exited" from="." to="." method="_on_Layout_mouse_exited"]
-[connection signal="gui_input" from="GAS" to="." method="_on_GAS_gui_input"]
+
+[node name="BREAK" type="ColorRect" parent="."]
+margin_left = 313.57
+margin_top = 204.178
+margin_right = 353.57
+margin_bottom = 244.178
+color = Color( 0.129412, 0.313726, 0.666667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverLabel" type="RichTextLabel" parent="."]
+margin_left = -40.1147
+margin_top = -16.5178
+margin_right = 39.8853
+margin_bottom = 23.4822
+visible_characters = 0
+percent_visible = 0.0
+text = "Game Over"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Counter" type="RichTextLabel" parent="."]
+margin_left = -20.0
+margin_top = -18.0
+margin_right = 20.0
+margin_bottom = 22.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="mouse_entered" from="GAS" to="." method="_on_GAS_mouse_entered"]
+[connection signal="mouse_exited" from="GAS" to="." method="_on_GAS_mouse_exited"]
+[connection signal="mouse_entered" from="BREAK" to="." method="_on_BREAK_mouse_entered"]
+[connection signal="mouse_exited" from="BREAK" to="." method="_on_GAS_mouse_exited"]
