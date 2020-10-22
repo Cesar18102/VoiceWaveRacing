@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scenes/Layout.gd" type="Script" id=1]
+
+[node name="Layout" type="Control"]
+anchor_left = -0.5
+anchor_top = -0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GAS" type="ColorRect" parent="."]
+margin_left = 374.57
+margin_top = 204.178
+margin_right = 414.57
+margin_bottom = 244.178
+color = Color( 0.666667, 0.129412, 0.129412, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_exited" from="." to="." method="_on_Layout_mouse_exited"]
+[connection signal="gui_input" from="GAS" to="." method="_on_GAS_gui_input"]
+[connection signal="mouse_entered" from="GAS" to="." method="_on_GAS_mouse_entered"]

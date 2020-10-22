@@ -4,7 +4,15 @@ signal landed(road);
 signal crashed(obstacle);
 signal boosted(bonus);
 signal gain(money);
-signal refueled(fuel)
+signal refueled(fuel);
+
+var gas: float = 0.0;
+
+func _process(delta):
+	$RearWheel.rotation += 1;
+	
+func add_gas(gas: float):
+	self.gas += gas;
 
 func _on_body_entered(body):
 	var is_road = body.get_collision_layer_bit(1);
@@ -24,16 +32,8 @@ func _on_body_entered(body):
 	elif is_fuel:
 		emit_signal("refueled", body);
 
-#var old_body_position = null;
-#
-#func _physics_process(delta):
-#
-#
-#	if old_body_position == null:
-#		old_body_position = $Body.position;
-#		return;
-#
-#	var dpoint = $Body.position - old_body_position;
-#
-#	$FrontWheel.position += dpoint;
-#	$RearWheel.position += dpoint;
+func _physics_process(delta):
+	print_debug("gas ", gas);
+	$RearWheel.apply_torque_impulse(gas * 100000);
+	#$FrontWheel.apply_torque_impulse(gas * 1000);
+	gas = 0;

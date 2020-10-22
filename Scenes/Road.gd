@@ -3,12 +3,6 @@ extends Node2D
 var road_texture = load("res://Materials/road.jpg");
 var last_point : Vector2 = Vector2(0, 0);
 
-var is_fallen = false;
-var player : RigidBody2D = null;
-
-func _ready():
-	player = get_parent().find_node("RigidBody2D", true, false);
-
 func build(delta_point, space, delta):
 	if space != 0:
 		last_point = Vector2(last_point.x + space, last_point.y);
@@ -58,19 +52,3 @@ func build(delta_point, space, delta):
 	add_child(road);
 
 	last_point = next_point;
-	
-func on_fallen(fallen, by):
-	fallen.set_deferred("mode", RigidBody2D.MODE_RIGID);
-	fallen.gravity_scale = by.gravity_scale;
-	
-	var sprite = fallen.get_child(1) as Sprite;
-	sprite.scale *= Vector2(fallen.scale.x, 5.0);
-	
-	fallen.remove_child(fallen.get_child(0));
-	is_fallen = true;
-
-func _process(delta):
-	#if not is_fallen:
-		$Camera.position += (last_point - $Camera.position) * delta;
-	#else:
-	#	$Camera.position = player.position;
