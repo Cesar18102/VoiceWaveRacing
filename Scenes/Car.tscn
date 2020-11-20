@@ -24,6 +24,10 @@ contacts_reported = 10
 contact_monitor = true
 can_sleep = false
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Body"]
+position = Vector2( 1.58691, 9.32596 )
+scale = Vector2( 9.13537, 4.03591 )
+
 [node name="BodyCollision" type="CollisionShape2D" parent="Body"]
 scale = Vector2( 4.55, 1.55 )
 shape = SubResource( 1 )
@@ -84,10 +88,6 @@ node_a = NodePath("../Body")
 node_b = NodePath("../RearWheel")
 length = 3.0
 initial_offset = 1.0
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( 1.58706, 9.32597 )
-scale = Vector2( 9.13537, 4.03591 )
 [connection signal="body_entered" from="Body" to="." method="_on_body_entered"]
 [connection signal="body_entered" from="FrontWheel" to="." method="_on_body_entered"]
 [connection signal="body_entered" from="RearWheel" to="." method="_on_body_entered"]

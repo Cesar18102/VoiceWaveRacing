@@ -34,9 +34,6 @@ func _process(delta):
 	
 	if time_passed >= TIME_SEGMENT:
 		var freq = $Listener.get_frequency();
-		
-		print_debug("data = ", freq);
-		
 		var dx = time_passed * 100;
 		
 		if freq <= MAX_FREQ_IGNORED:
@@ -75,7 +72,7 @@ func checkCarFallen():
 	return true;
 
 func checkCarBehindCamera():
-	return not $Car/VisibilityNotifier2D.is_on_screen();
+	return not $Car/Body/VisibilityNotifier2D.is_on_screen();
 	
 func checkCarStuck():
 	return false;
