@@ -22,9 +22,7 @@ var timer_passing : bool = false;
 
 func _process(delta):
 	if is_over:
-		if handleGameOver():
-			var a = 0;
-			#GO TO MAIN MENU
+		handleGameOver();
 		return;
 	
 	if checkGameOver() and not timer_passing:
@@ -87,6 +85,7 @@ func checkGameOver():
 
 func handleGameOver():
 	if $Layout/GameOverLabel.percent_visible == 1.0:
+		$Layout/RestartButton.visible = true;
 		return true;
 	$Layout/GameOverLabel.percent_visible += 0.1;
 
@@ -144,3 +143,7 @@ func _on_obstacle_release(obstacle):
 		$Car.DECELERATION_BREAK *= 2;
 	elif obstacle[0].name == $Road.OBSTACLE_TYPES[1]: #builderx05
 		DX_COEFF *= 2;
+
+
+func _on_Layout_restart():
+	get_tree().reload_current_scene();

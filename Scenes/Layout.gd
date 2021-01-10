@@ -6,6 +6,7 @@ signal gas_release;
 signal breaked;
 signal break_release;
 
+signal restart;
 signal counter_expired;
 
 var counter_from = 0;
@@ -60,3 +61,7 @@ func count(from: int, to: int, delta: int, duration: int):
 	
 	$Counter.visible = true;
 	$Counter.text = from as String;
+
+
+func _on_RestartButton_pressed():
+	emit_signal("restart");

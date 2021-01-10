@@ -73,3 +73,4 @@ anchor_bottom = 0.0
 [connection signal="breaked" from="Layout" to="Car" method="_on_breaked"]
 [connection signal="gas_release" from="Layout" to="Car" method="_on_gas_release"]
 [connection signal="gased" from="Layout" to="Car" method="_on_gased"]
+[connection signal="restart" from="Layout" to="." method="_on_Layout_restart"]
