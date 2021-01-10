@@ -1,8 +1,11 @@
 extends Control
 
 signal gased;
+signal gas_release;
+
 signal breaked;
-signal idle;
+signal break_release;
+
 signal counter_expired;
 
 var counter_from = 0;
@@ -16,11 +19,20 @@ var time_passed = 0.0;
 func _on_GAS_mouse_entered():
 	emit_signal("gased");
 
-func _on_GAS_mouse_exited():
-	emit_signal("idle");
-
 func _on_BREAK_mouse_entered():
 	emit_signal("breaked");
+	
+func _on_GAS_mouse_exited():
+	emit_signal("gas_release");
+	
+func _on_BREAK_mouse_exited():
+	emit_signal("break_release");
+	
+func updateFuel(fuel):
+	$FuelLabel.text = String(int(fuel)) + "%";
+
+func updateHealth(health):
+	$HpLabel.text = String(int(health));
 	
 func _process(delta):
 	if not counter_active:

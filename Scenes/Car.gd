@@ -5,30 +5,43 @@ signal boosted(bonus);
 signal gain(money);
 signal refueled(fuel);
 
-var acceleration_gas : float = 300000.0;
-var deceleration_break : float = -300000.0;
+var ACCELERATION_GAS : float = 300000.0;
+var DECELERATION_BREAK : float = -150000.0;
 
-var damage_per_hit : float = 33.0;
+const FUEL_TANK_VOLUME : float = 1000.0;
+const ACCELERATION_FUEL_CAPACITY_PER_SECOND : float = 5.0;
+const DECELERATION_FUEL_CAPACITY_PER_SECOND : float = 3.0;
+const IDLE_FUEL_CAPACITY_PER_SECOND : float = 1.0;
 
-var fuel_tank_volume : float = 100.0;
-var fuel_capacity_per_second : float = 5.0;
+const MAX_HP = 100;
 
-var HP : float = 100.0;
-var fuel : float = 100.0;
+var hp : float = MAX_HP;
+var fuel : float = FUEL_TANK_VOLUME;
+
+var is_acceleration : bool = false;
+var is_deceleration : bool = false;
 
 func _on_gased():
-	$RearWheel.applied_torque = acceleration_gas;
-	$FrontWheel.applied_torque = acceleration_gas;
+	$RearWheel.applied_torque = ACCELERATION_GAS;
+	$FrontWheel.applied_torque = ACCELERATION_GAS;
+	is_acceleration = true;
 	
-func _on_GAS_BREAK_idle():
+func _on_gas_release():
 	$RearWheel.applied_torque = 0;
 	$FrontWheel.applied_torque = 0;
+	is_acceleration = false;
 	
 func _on_breaked():
-	$RearWheel.applied_torque = deceleration_break;
-	$FrontWheel.applied_torque = deceleration_break;
+	$RearWheel.applied_torque = DECELERATION_BREAK;
+	$FrontWheel.applied_torque = DECELERATION_BREAK;
+	is_deceleration = true;
+	
+func _on_break_release():
+	$RearWheel.applied_torque = 0;
+	$FrontWheel.applied_torque = 0;
+	is_deceleration = false;
 
-func _on_body_entered(body):
+func _on_body_entered(body : Node2D):
 	var is_road = body.get_collision_layer_bit(1);
 	var is_obstacle = body.get_collision_layer_bit(2);
 	var is_bonus = body.get_collision_layer_bit(3);
@@ -43,3 +56,11 @@ func _on_body_entered(body):
 		emit_signal("gain", body);
 	elif is_fuel:
 		emit_signal("refueled", body);
+
+func _process(delta):
+	if is_acceleration:
+		fuel -= ACCELERATION_FUEL_CAPACITY_PER_SECOND * delta;
+	if is_deceleration:
+		fuel -= DECELERATION_FUEL_CAPACITY_PER_SECOND * delta;
+	if not is_acceleration and not is_deceleration:
+		fuel -= IDLE_FUEL_CAPACITY_PER_SECOND * delta;

@@ -8,14 +8,17 @@ const MAX_FREQ_FLAT = 0.7;
 
 const SPACE_COEF= 0.1;
 
+const FUEL_SCOPE = 500;
+const BONUS_TIME = 5;
+const OBSTACLE_TIME = 5;
+
+var DX_COEFF = 100;
+
 var time_passed = 0.0;
 var space = 0.0;
 
 var is_over : bool = false;
 var timer_passing : bool = false;
-
-func _on_Car_crashed(obstacle):
-	is_over = true;
 
 func _process(delta):
 	if is_over:
@@ -34,7 +37,7 @@ func _process(delta):
 	
 	if time_passed >= TIME_SEGMENT:
 		var freq = $Listener.get_frequency();
-		var dx = time_passed * 100;
+		var dx = time_passed * DX_COEFF;
 		
 		if freq <= MAX_FREQ_IGNORED:
 			space += dx * SPACE_COEF;
@@ -53,6 +56,8 @@ func _process(delta):
 	
 	$Camera.position += ($Road.last_point - $Camera.position) * delta;
 	$Layout.rect_global_position = $Camera.global_position;
+	$Layout.updateFuel($Car.fuel * 100 / $Car.FUEL_TANK_VOLUME);
+	$Layout.updateHealth($Car.hp);
 	
 func checkCarFallen():
 	var rear_pos = $Car/RearWheel.global_position;
@@ -87,3 +92,55 @@ func handleGameOver():
 
 func onGameOverTimerFinished():
 	is_over = checkGameOver();
+
+func _on_Car_refueled(fuel):
+	fuel.get_parent().remove_child(fuel);
+	$Car.fuel = min($Car.fuel + FUEL_SCOPE, $Car.FUEL_TANK_VOLUME)
+
+func _on_Car_boosted(bonus):
+	bonus.get_parent().remove_child(bonus);
+	if bonus.name == $Road.BONUS_TYPES[0]: #speedx2
+		$Car.ACCELERATION_GAS *= 2;
+		$Car.DECELERATION_BREAK *= 2;
+	elif bonus.name == $Road.BONUS_TYPES[1]: #builderx2
+		DX_COEFF *= 2;
+	
+	var timer = Timer.new();
+	timer.wait_time = BONUS_TIME;
+	timer.connect("timeout", self, "_on_boost_release", [ bonus ]);
+	timer.start();
+
+func _on_boost_release(bonus):
+	if bonus[0].name == $Road.BONUS_TYPES[0]: #speedx2
+		$Car.ACCELERATION_GAS /= 2;
+		$Car.DECELERATION_BREAK /= 2;
+	elif bonus[0].name == $Road.BONUS_TYPES[1]: #builderx2
+		DX_COEFF /= 2;
+
+func _on_Car_crashed(obstacle):
+	obstacle.get_parent().remove_child(obstacle);
+	if obstacle.name == $Road.OBSTACLE_TYPES[0]: #speedx05
+		$Car.ACCELERATION_GAS /= 2;
+		$Car.DECELERATION_BREAK /= 2;
+	elif obstacle.name == $Road.OBSTACLE_TYPES[1]: #builderx05
+		DX_COEFF /= 2;
+	elif obstacle.name == $Road.OBSTACLE_TYPES[2]: #vlc
+		if $Car.hp - 15 <= 0:
+			$Car.hp = 0;
+			is_over = true;	
+		else:
+			$Car.hp -= 15;
+	elif obstacle.name == $Road.OBSTACLE_TYPES[3]: #corona
+		is_over = true;
+		
+	var timer = Timer.new();
+	timer.wait_time = OBSTACLE_TIME;
+	timer.connect("timeout", self, "_on_obstacle_release", [ obstacle ]);
+	timer.start();
+
+func _on_obstacle_release(obstacle):
+	if obstacle[0].name == $Road.OBSTACLE_TYPES[0]: #speedx05
+		$Car.ACCELERATION_GAS *= 2;
+		$Car.DECELERATION_BREAK *= 2;
+	elif obstacle[0].name == $Road.OBSTACLE_TYPES[1]: #builderx05
+		DX_COEFF *= 2;

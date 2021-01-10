@@ -66,7 +66,10 @@ shape = SubResource( 2 )
 [node name="Layout" parent="." instance=ExtResource( 7 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+[connection signal="boosted" from="Car" to="." method="_on_Car_boosted"]
 [connection signal="crashed" from="Car" to="." method="_on_Car_crashed"]
+[connection signal="refueled" from="Car" to="." method="_on_Car_refueled"]
+[connection signal="break_release" from="Layout" to="Car" method="_on_break_release"]
 [connection signal="breaked" from="Layout" to="Car" method="_on_breaked"]
+[connection signal="gas_release" from="Layout" to="Car" method="_on_gas_release"]
 [connection signal="gased" from="Layout" to="Car" method="_on_gased"]
-[connection signal="idle" from="Layout" to="Car" method="_on_GAS_BREAK_idle"]

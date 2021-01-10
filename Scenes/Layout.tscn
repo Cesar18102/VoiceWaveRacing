@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/Layout.gd" type="Script" id=1]
+[ext_resource path="res://Materials/break.png" type="Texture" id=2]
+[ext_resource path="res://Materials/gas.png" type="Texture" id=3]
 
 [node name="Layout" type="Control"]
 anchor_left = -0.5
@@ -12,47 +14,87 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GAS" type="ColorRect" parent="."]
-margin_left = 374.57
-margin_top = 204.178
-margin_right = 414.57
-margin_bottom = 244.178
-color = Color( 0.666667, 0.129412, 0.129412, 1 )
+[node name="GAS" type="TextureRect" parent="."]
+margin_left = 350.0
+margin_top = 150.0
+margin_right = 539.0
+margin_bottom = 339.0
+rect_scale = Vector2( 0.714, 0.714 )
+texture = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BREAK" type="ColorRect" parent="."]
-margin_left = 313.57
-margin_top = 204.178
-margin_right = 353.57
-margin_bottom = 244.178
-color = Color( 0.129412, 0.313726, 0.666667, 1 )
+[node name="BREAK" type="TextureRect" parent="."]
+margin_left = 180.0
+margin_top = 150.0
+margin_right = 369.0
+margin_bottom = 339.0
+rect_scale = Vector2( 0.79, 0.79 )
+texture = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameOverLabel" type="RichTextLabel" parent="."]
-margin_left = -40.1147
-margin_top = -16.5178
-margin_right = 39.8853
-margin_bottom = 23.4822
-visible_characters = 0
-percent_visible = 0.0
+[node name="GameOverLabel" type="Label" parent="."]
+margin_left = -80.0
+margin_top = -40.0
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 5
 text = "Game Over"
+percent_visible = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Counter" type="RichTextLabel" parent="."]
-margin_left = -20.0
-margin_top = -18.0
-margin_right = 20.0
-margin_bottom = 22.0
+[node name="Counter" type="Label" parent="."]
+margin_left = -40.0
+margin_top = -40.0
+rect_scale = Vector2( 2, 2 )
+size_flags_vertical = 5
+text = "
+"
+
+[node name="FuelStaticLabel" type="Label" parent="."]
+margin_left = 200.0
+margin_top = -250.0
+margin_right = 240.0
+margin_bottom = -236.0
+rect_scale = Vector2( 2, 2 )
+size_flags_horizontal = 3
+text = "Fuel:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FuelLabel" type="Label" parent="."]
+margin_left = 280.0
+margin_top = -250.0
+margin_right = 320.0
+margin_bottom = -236.0
+rect_scale = Vector2( 2, 2 )
+text = "100%"
+
+[node name="HpStaticLabel" type="Label" parent="."]
+margin_left = 200.0
+margin_top = -200.0
+margin_right = 246.0
+margin_bottom = -186.0
+rect_scale = Vector2( 2, 2 )
+size_flags_horizontal = 3
+text = "Health:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpLabel" type="Label" parent="."]
+margin_left = 300.0
+margin_top = -200.0
+margin_right = 340.0
+margin_bottom = -186.0
+rect_scale = Vector2( 2, 2 )
+text = "100"
 [connection signal="mouse_entered" from="GAS" to="." method="_on_GAS_mouse_entered"]
 [connection signal="mouse_exited" from="GAS" to="." method="_on_GAS_mouse_exited"]
 [connection signal="mouse_entered" from="BREAK" to="." method="_on_BREAK_mouse_entered"]
-[connection signal="mouse_exited" from="BREAK" to="." method="_on_GAS_mouse_exited"]
+[connection signal="mouse_exited" from="BREAK" to="." method="_on_BREAK_mouse_exited"]
